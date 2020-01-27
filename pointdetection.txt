@@ -1,0 +1,41 @@
+
+/*  Point detection algorithm. Convolute the image with the 
+	mask below. If the output is greater than the threshold
+	value, the pixel is white else black.
+*/
+
+/*	pt is a mask for point detection
+*/
+
+int pt[3][3] = { {-1,-1,-1},{-1,8,-1},{-1,-1,-1} };
+
+/*	a is the result of the convolution
+*/
+
+int a;
+
+// t is the threshold value. User input should allow it to be changed
+
+int t = 200;
+
+for (j = 1; j< height - 1; j++)
+	for (k = 1; k < width - 1; k++)
+	{
+		a = image_in[j - 1][k - 1] * pt[0][0]
+			+ image_in[j + 0][k - 1] * pt[1][0]
+			+ image_in[j + 1][k - 1] * pt[2][0]
+			+ image_in[j - 1][k + 0] * pt[0][1]
+			+ image_in[j + 0][k + 0] * pt[1][1]
+			+ image_in[j + 1][k + 0] * pt[2][1]
+			+ image_in[j - 1][k + 1] * pt[0][2]
+			+ image_in[j + 0][k + 1] * pt[1][2]
+			+ image_in[j + 1][k + 1] * pt[2][2];
+
+		if (a > t) {
+			image_out[j][k] = 255;
+		}
+		else
+		{
+			image_out[j][k] = 0;
+		}
+	}

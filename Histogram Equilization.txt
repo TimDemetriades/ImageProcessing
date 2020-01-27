@@ -1,0 +1,30 @@
+//Histogram Equilization (fixes contrast)
+	
+    int pixelTotal = width * height;
+    float pixelValue = 1 / ((float)pixelTotal);
+	float hist[256] = { };  //initilize histagram array to 0
+	float maphist[256] = { };  //initilize mapping array to 0
+
+    //counting each intensity (making histogram)
+	for (j = 0; j < height; j++) {
+		for (k = 0; k < width; k++)  //scan entire image
+		
+			hist[image_in[j][k]] += pixelValue;  // hist[i] = hist[i-1] + pixelValue
+		
+	}
+        
+    //mapping function of histagram
+	for (j = 0; j < 256; j++) {
+		for (k = 0; k < (j + 1); k++)
+		
+			maphist[j] += hist[k];  //summation of histogram
+			maphist[j] = maphist[j] * (256 - 1);  //based on formula (L=256)
+	}
+        
+    //apply mapping function to original image
+	for (j = 0; j < height; j++) {
+		for (k = 0; k < width; k++)
+		
+			image_out[j][k] = (int)maphist[image_in[j][k]];
+		
+	}

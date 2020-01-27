@@ -1,0 +1,28 @@
+ // Salt pepper noise
+	
+	int array[3] = { };
+
+	int a;
+	int b;
+	int c;
+
+	for (j = 1; j < height - 1; j++)
+		for (k = 1; k < width - 1; k++)
+		{
+			int a = image_in[j - 1][k]; //a = first pixel
+			int b = image_in[  j  ][k]; //b = second pixel
+			int c = image_in[j + 1][k]; //c = third pixel
+
+			//if b is median, black pixel
+			if ((a < b && b < c) || (c < b & b < a))
+				image_out[j][k] = 0;
+
+			//if a is median, white pixel
+			else if ((b < a && a < c) || (c < a && a < b))
+				image_out[j][k] = 255;
+
+			//if c is median, displays c
+			else
+				image_out[j][k] = c;
+			
+		}

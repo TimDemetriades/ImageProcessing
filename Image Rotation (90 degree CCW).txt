@@ -1,0 +1,7 @@
+//Image Rotation (90 degree CCW)
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			image_out[j][k] = image_in[k][width-1-j]; // Rotated Image
+		}

@@ -1,0 +1,66 @@
+/*	tf is the calculated threshold value after the pass (t i+1)
+	ti is the initial threshold value before the pass( t i)
+	sum3 and count3 help compute the average pixel value of the distribution less than the threshold
+	sum4 and count4 help compute the average pixel value of the distribution more than the threshold
+*/
+
+int tf = 200;
+int ti = 0;
+int sum3 = 0;
+int count3 = 0;
+int sum4 = 0;
+int count4 = 0;
+/*	I used a do while loop to determine the average 
+pixel value of both distributions below and above the 
+threshold.
+*/
+do
+{
+	ti = tf;	//	Assign the final value from the previous iteration to the value for the current iteration
+
+	/*	This double for loop parses through the image and appends sum and count 
+	values for the right distribution.
+	*/
+	for (j = 0; j < height;j++) {
+		for (k = 0; k < width;k++) {
+			if (image_in[j][k] < ti) {
+				sum3 += image_in[j][k];
+				count3++;
+			}
+			if (image_in[j][k] >= ti) {
+				sum4 += image_in[j][k];
+				count4++;
+			}
+		}
+	}
+	/* Calculates new threshold value. The print statement is not needed but is just a 
+	check for the output for each iteration of the loop.
+	*/
+	tf = (sum3 / count3 + sum4 / count4) / 2;
+	printf("%i and %i\n", tf, ti);
+
+	/*	Resets all sum and count values for each partition
+	*/
+	
+	sum3 = 0;
+	count3 = 0;
+	sum4 = 0;
+	count4 = 0;
+} while (abs(tf-ti) > 2);
+
+printf("Final Threshold value: %i", tf);
+
+/*	Iterates through output image with final threshold value and
+produces the two level binary image.
+*/
+
+for (j = 0; j<height; j++)
+	for (k=0; k<width; k++)
+	{
+		if (image_in[j][k] < tf) {
+			image_out[j][k] = 0;
+		}
+		if (image_in[j][k] >= tf) {
+			image_out[j][k] = 255;
+		}
+	}

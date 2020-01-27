@@ -1,0 +1,93 @@
+
+/*	tf is the calculated threshold value after the pass (t i+1)
+ti is the initial threshold value before the pass( t i)
+sum3 and count3 help compute the average pixel value of the distribution less than the threshold
+sum4 and count4 help compute the average pixel value of the distribution more than the threshold
+*/
+int num = 32;
+if (height % num != 0 || width % num != 0)
+{
+	printf("Error");
+}
+else
+{
+	for (int i = 0; i < num; i++) {
+		for (int h = 0; h < num; h++) {
+			for (j = i * height / num; j < (i + 1)*height / num; j++) {
+				for (k = h * width / num; k < (h + 1) * width / num; k++) {
+					float tf = 200.0;
+					float ti = 0.0;
+					int sum3 = 0;
+					int count3 = 0;
+					int sum4 = 0;
+					int count4 = 0;
+					/*	I used a do while loop to determine the average
+					pixel value of both distributions below and above the
+					threshold.
+					*/
+					do
+					{
+						ti = tf;	//	Assign the final value from the previous iteration to the value for the current iteration
+
+									/*	This double for loop parses through the image and appends sum and count
+									values for the right distribution.
+									*/
+						for (j = i * height / num; j < (i + 1)*height / num; j++) {
+							for (k = h * width / num; k < (h + 1) * width / num; k++) {
+								if (image_in[j][k] < ti) {
+									sum3 += image_in[j][k];
+									count3++;
+								}
+								if (image_in[j][k] >= ti) {
+									sum4 += image_in[j][k];
+									count4++;
+								}
+							}
+						}
+
+						if (count4 == 0) {
+							tf = sum3 / count3;
+							printf("%f and %f\n", tf, ti);
+						} else if (count3 == 0) {
+							tf = sum4 / count4;
+							printf("%f and %f\n", tf, ti);
+						}
+						else {
+							tf = (sum3 / count3 + sum4 / count4) / 2;
+							printf("%f and %f\n", tf, ti);
+						}
+						/* Calculates new threshold value. The print statement is not needed but is just a
+						check for the output for each iteration of the loop.
+						*/
+						
+
+						/*	Resets all sum and count values for each partition
+						*/
+
+						sum3 = 0;
+						count3 = 0;
+						sum4 = 0;
+						count4 = 0;
+					} while (abs(tf - ti) > 1.0);
+
+					printf("Final Threshold value: %f\n", tf);
+
+					/*	Iterates through output image with final threshold value and
+					produces the two level binary image.
+					*/
+
+					for (j = i * height / num; j < (i + 1)*height / num; j++)
+						for (k = h * width / num; k < (h + 1) * width / num; k++)
+						{
+							if (image_in[j][k] < tf) {
+								image_out[j][k] = 0;
+							}
+							if (image_in[j][k] >= tf) {
+								image_out[j][k] = 255;
+							}
+						}
+				}
+			}
+		}
+	}
+}

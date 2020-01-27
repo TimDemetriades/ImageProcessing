@@ -1,0 +1,51 @@
+//Global Thresholder
+
+	int global_t = 256 / 2;  //global threshold (middle intensity)
+	int initial_t = 0;  //initial threshold
+	int lower_sum = 0;  //sum of intensities under initial_t
+	int upper_sum = 0;  //sum of intensities over initial_t
+	int lower_amount = 0;  //amount of pixels w/ intensities under initial_t
+	int upper_amount = 0;  //amount of pixels w/ intensities over initial_t
+	int lower_average = 0;  //average intensity under initial_t
+	int upper_average = 0;  //average intensity over initial_t
+
+	do
+	{
+		initial_t = global_t;  //makes the initial_t the value of global_t (initially 128)
+
+		for (j = 0; j < height; j++) 
+			for (k = 0; k < width; k++)  //scans thru image
+			{
+				if (image_in[j][k] < initial_t)  //intensities under initial_t
+				{
+					lower_sum = lower_sum + image_in[j][k];
+					lower_amount++;
+				}
+				else if (image_in[j][k] >= initial_t)  //intensities over initial_t
+				{
+					upper_sum = upper_sum + image_in[j][k];
+					upper_amount++;
+				}
+			}
+
+		lower_average = (lower_sum / lower_amount);
+		upper_average = (upper_sum / upper_amount);
+
+		global_t = (lower_average + upper_average) / 2;  //new global intensity
+
+		printf("global_t is now %d and initial_t is %d\n", global_t, initial_t);
+
+	} while (abs(initial_t - global_t) >= 5);  //repeats until difference is less than 5
+
+	for (j = 0; j < height; j++) 
+		for (k = 0; k < width; k++)
+		{
+			if (image_in[j][k] < global_t)  //intensities under global_t
+			{
+				image_out[j][k] = 0;  //black
+			}
+			else if (image_in[j][k] >= global_t)  //intensities over global_t
+			{
+				image_out[j][k] = 255;  //white
+			}
+		}

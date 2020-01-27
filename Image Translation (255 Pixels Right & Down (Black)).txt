@@ -1,0 +1,15 @@
+//Image Translation (255 pixels Right & Down (Black))
+
+	int x = 255;
+	int y = 255;
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			if (j - y < 0 || k - x < 0) {
+				image_out[j][k] = 0;
+			}
+			else {
+				image_out[j][k] = image_in[j - y][k - x];
+			}
+		}

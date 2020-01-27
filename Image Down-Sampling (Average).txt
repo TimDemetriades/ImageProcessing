@@ -1,0 +1,17 @@
+//Image Down-Sampling (Average)
+
+	for (j = 1; j < height - 1; j++) {
+		for (k = 1; k < width - 1; k++)
+
+			//Convolution
+			(image_out[j][k]) = (int)(image_in[j - 1][k - 1]
+				+ image_in[j - 1][k]
+				+ image_in[j - 1][k + 1]
+				+ image_in[j][k - 1]
+				+ image_in[j][k]
+				+ image_in[j][k + 1]
+				+ image_in[j + 1][k - 1]
+				+ image_in[j + 1][k]
+				+ image_in[j + 1][k + 1]) / 9;
+
+	}

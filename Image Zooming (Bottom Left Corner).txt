@@ -1,0 +1,10 @@
+//Image Zooming (Bottom Left Corner)
+
+	int x = 2;
+	int y = 2;
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			image_out[j][k] = image_in[(j - 1 + height) / x][k / y];
+		}

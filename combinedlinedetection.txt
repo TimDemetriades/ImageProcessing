@@ -1,0 +1,106 @@
+
+/*	This is the combined output for the line detection model.
+	This combines the horizontal, vertical, positive 45, and 
+	negative 45 masks for a single composited image. 
+*/
+
+/*	These four matrices are the masks for the line detection model. 
+	hm is horizontal mask, 
+	vm is vertical mask,
+	pos45 is the positive 45 degree mask, and
+	neg45 is the negative 45 degree mask
+*/
+
+int hm[3][3] =		{ { -1,-1,-1 },{  2, 2, 2 },{ -1,-1,-1 } };
+int vm[3][3] =		{ { -1, 2,-1 },{ -1, 2,-1 },{ -1, 2,-1 } };
+int pos45[3][3] =	{ { -1,-1, 2 },{ -1, 2,-1 },{  2,-1,-1 } };
+int neg45[3][3] =	{ {  2,-1,-1 },{ -1, 2,-1 },{ -1,-1, 2 } };
+
+/*	Result from convolution
+	a is the result of the horizontal convolution
+	b is the result of the vertical convolution
+	c is the result of the positive 45 degree convolution
+	d is the result of the negative 45 degree convolution
+*/
+
+int a;
+int b;
+int c;
+int d;
+
+/*	t is the threshold value for the model.
+	This value needs to be able to change based of user's input
+*/
+
+int t = 70;
+
+for (j =1; j< height-1; j++)
+	for (k = 1; k< width -1; k++)
+	{
+		/*	a, b, c, d multiply the value in the vicinity and sum them
+			convolution
+		*/
+		a = image_in[j - 1][k - 1] * hm[0][0]
+			+ image_in[j + 0][k - 1] * hm[1][0]
+			+ image_in[j + 1][k - 1] * hm[2][0]
+			+ image_in[j - 1][k + 0] * hm[0][1]
+			+ image_in[j + 0][k + 0] * hm[1][1]
+			+ image_in[j + 1][k + 0] * hm[2][1]
+			+ image_in[j - 1][k + 1] * hm[0][2]
+			+ image_in[j + 0][k + 1] * hm[1][2]
+			+ image_in[j + 1][k + 1] * hm[2][2];
+		b = image_in[j - 1][k - 1] * vm[0][0]
+			+ image_in[j + 0][k - 1] * vm[1][0]
+			+ image_in[j + 1][k - 1] * vm[2][0]
+			+ image_in[j - 1][k + 0] * vm[0][1]
+			+ image_in[j + 0][k + 0] * vm[1][1]
+			+ image_in[j + 1][k + 0] * vm[2][1]
+			+ image_in[j - 1][k + 1] * vm[0][2]
+			+ image_in[j + 0][k + 1] * vm[1][2]
+			+ image_in[j + 1][k + 1] * vm[2][2];
+		c = image_in[j - 1][k - 1] * pos45[0][0]
+			+ image_in[j + 0][k - 1] * pos45[1][0]
+			+ image_in[j + 1][k - 1] * pos45[2][0]
+			+ image_in[j - 1][k + 0] * pos45[0][1]
+			+ image_in[j + 0][k + 0] * pos45[1][1]
+			+ image_in[j + 1][k + 0] * pos45[2][1]
+			+ image_in[j - 1][k + 1] * pos45[0][2]
+			+ image_in[j + 0][k + 1] * pos45[1][2]
+			+ image_in[j + 1][k + 1] * pos45[2][2];
+		d = image_in[j - 1][k - 1] * neg45[0][0]
+			+ image_in[j + 0][k - 1] * neg45[1][0]
+			+ image_in[j + 1][k - 1] * neg45[2][0]
+			+ image_in[j - 1][k + 0] * neg45[0][1]
+			+ image_in[j + 0][k + 0] * neg45[1][1]
+			+ image_in[j + 1][k + 0] * neg45[2][1]
+			+ image_in[j - 1][k + 1] * neg45[0][2]
+			+ image_in[j + 0][k + 1] * neg45[1][2]
+			+ image_in[j + 1][k + 1] * neg45[2][2];
+		/*	this compares the a,b,c, and d value with the threshold 
+			value
+			if one of these values are bigger than the threshold value, it exists 
+			out of this conditional statements and sets the value to black
+			if all of these values are less than the threshold value, it 
+			sets the output value to white
+		*/
+		if (a > t) {
+			image_out[j][k] = 255;
+		}
+		else  if (b > t)
+		{
+			image_out[j][k] = 255;
+		}
+		else  if (c > t)
+		{
+			image_out[j][k] = 255;
+		}
+		else  if (d > t)
+		{
+			image_out[j][k] = 255;
+		}
+		else
+		{
+			image_out[j][k] = 0;
+		}
+
+	}

@@ -1,0 +1,26 @@
+// Low Pass Filter (Smooths Image)
+	
+	float count = 0.0;
+	float mask[3][3] = { {0.11, 0.11, 0.11},{0.11, 0.11, 0.11},{0.11, 0.11, 0.11} };
+	float output = 0.0;
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			if (j == 0 || k == 0 || j == height - 1 || k == width - 1)
+				image_out[j][k] = image_in[j][k];
+			else {
+				count = 0.0;
+				for (int l = 0; l < 3; l++)
+				{
+					for (int m = 0; m < 3; m++)
+					{
+						count += ((float)image_in[j + l - 1][k + m - 1] * mask[l][m]);
+					}
+				}
+				output = count;
+				output = (output > 255 ? 255 : output); // output over 255 = 255 , under 255 = output
+				output = (output < 0 ? 0 : output); // output under 0 = 0 , over 0 = output
+				image_out[j][k] = (int)output;
+			}
+		}

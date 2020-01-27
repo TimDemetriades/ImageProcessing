@@ -1,0 +1,9 @@
+// Power and Root Identity Transform
+
+float exp = 4;
+
+for (j = 0; j<height; j++)
+	for (k = 0; k<width; k++)
+	{
+		image_out[j][k] = pow((float)image_in[j][k] / 256, exp)*256;
+	}

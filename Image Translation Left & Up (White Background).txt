@@ -1,0 +1,15 @@
+//Image Translation Left & Up (White Background)
+
+int x = 255;
+	int y = 255;
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			if (j + y > 511 || k + x > 511) {
+				image_out[j][k] = 255;
+			}
+			else {
+				image_out[j][k] = image_in[j+y][k+x];
+			}
+		}

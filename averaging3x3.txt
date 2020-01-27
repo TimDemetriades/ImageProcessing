@@ -1,0 +1,24 @@
+
+/*  Averaging Mask algorithm. Convolute the image with the 
+	mask below. This smooths the operation
+*/
+
+/*	lf is a mask for low pass filter
+*/
+
+int lf[3][3] = { {1,1,1},{1,1,1},{1,1,1} };
+
+for (j = 1; j< height - 1; j++)
+	for (k = 1; k < width - 1; k++)
+	{
+		image_out[j][k] = image_in[j - 1][k - 1] * 1.0 / 9 * lf[0][0]
+						+ image_in[j + 0][k - 1] * 1.0 / 9 * lf[1][0]
+						+ image_in[j + 1][k - 1] * 1.0 / 9 * lf[2][0]
+						+ image_in[j - 1][k + 0] * 1.0 / 9 * lf[0][1]
+						+ image_in[j + 0][k + 0] * 1.0 / 9 * lf[1][1]
+						+ image_in[j + 1][k + 0] * 1.0 / 9 * lf[2][1]
+						+ image_in[j - 1][k + 1] * 1.0 / 9 * lf[0][2]
+						+ image_in[j + 0][k + 1] * 1.0 / 9 * lf[1][2]
+						+ image_in[j + 1][k + 1] * 1.0 / 9 * lf[2][2];
+
+	}

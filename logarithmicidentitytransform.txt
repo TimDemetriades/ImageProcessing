@@ -1,0 +1,6 @@
+// Logarithmic Identity Transform
+for (j = 0; j<height; j++)
+	for (k = 0; k<width; k++)
+	{
+		image_out[j][k] = 256 * log2(1 + (float)image_in[j][k] / 256);
+	}

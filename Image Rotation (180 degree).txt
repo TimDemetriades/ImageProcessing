@@ -1,0 +1,7 @@
+//Image Rotation (180 degree)
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			image_out[j][k] = image_in[height-1-j][height-1-k]; // Rotated Image
+		}

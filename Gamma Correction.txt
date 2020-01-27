@@ -1,0 +1,10 @@
+ //Gamma Correction
+
+	float Constant = 256;
+	float Gamma = 1.5;
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			image_out[j][k] = Constant * pow((float)image_in[j][k] / 256 , Gamma);
+		}

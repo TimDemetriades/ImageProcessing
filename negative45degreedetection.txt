@@ -1,0 +1,33 @@
+
+//Negative 45 Degree Detection
+
+// neg45 is the positive 45 degree mask that needs to be applied to do the convolution
+// t is the threshold value that the output compares to. User should be able to change it 
+int neg45[3][3] = { { 2,-1, -1 },{ -1, 2,-1 },{ -1,-1,2 } };
+int t = 70;
+int d = 0;
+
+for (j = 1; j< height - 1; j++)
+	for (k = 1; k < width - 1; k++)
+	{
+		/*	d multiplies the value in the vicinity and sum them
+		convolution
+			d is the result of the vertical convolution
+		*/
+		d = image_in[j - 1][k - 1] * neg45[0][0]
+			+ image_in[j + 0][k - 1] * neg45[1][0]
+			+ image_in[j + 1][k - 1] * neg45[2][0]
+			+ image_in[j - 1][k + 0] * neg45[0][1]
+			+ image_in[j + 0][k + 0] * neg45[1][1]
+			+ image_in[j + 1][k + 0] * neg45[2][1]
+			+ image_in[j - 1][k + 1] * neg45[0][2]
+			+ image_in[j + 0][k + 1] * neg45[1][2]
+			+ image_in[j + 1][k + 1] * neg45[2][2];
+		if (d > t) {
+			image_out[j][k] = 255;
+		}
+		else
+		{
+			image_out[j][k] = 0;
+		}
+	}

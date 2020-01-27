@@ -1,0 +1,27 @@
+int hist[256] = { 0 };
+int eqhist[256] = { 0 };
+//increments by one the respective value of the histogram.
+for (j = 0; j < height; j++)
+	for (k = 0; k < width;k++)
+	{
+		hist[image_in[j][k]]++;
+	}
+//applies the equalized histogram function to the original histogram
+int sum = 0;
+for (int i = 0; i < 256; i++)
+{
+	for (int a = 0; a <= i; a++)
+	{
+		sum += hist[a];
+	}
+	eqhist[i] = round(255.0 * sum / 512 / 512);
+	sum = 0;
+}
+//create output image from eqaulized function
+for (j = 0; j < height; j++)
+	for (k = 0; k < width; k++)
+	{
+		image_out[j][k] = eqhist[image_in[j][k]];
+	} 
+
+

@@ -1,0 +1,7 @@
+//Inverts Image
+
+	for (j=0; j<height; j++)
+		for (k=0; k<width; k++)
+	    	{
+			image_out[j][k]=255-image_in[j][k];
+		} 

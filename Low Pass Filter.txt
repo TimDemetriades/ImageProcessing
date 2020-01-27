@@ -1,0 +1,18 @@
+//Image Low-Pass Filter (Smoothing)
+
+	int LPF[3][3] = { {1, 1, 1}, {1, 1, 1}, {1, 1, 1} };
+
+	for (j = 1; j < height - 1; j++) 
+		for (k = 1; k < width - 1; k++)
+		{
+			//Convolution
+			(image_out[j][k]) = (float)(image_in[j - 1][k - 1] * (LPF[0][0] / 9)
+				+ image_in[j - 1][  k  ] * (LPF[0][1] / 9)
+				+ image_in[j - 1][k + 1] * (LPF[0][2] / 9)
+				+ image_in[  j  ][k - 1] * (LPF[1][0] / 9)
+				+ image_in[  j  ][  k  ] * (LPF[1][1] / 9)
+				+ image_in[  j  ][k + 1] * (LPF[1][2] / 9)
+				+ image_in[j + 1][k - 1] * (LPF[2][0] / 9)
+				+ image_in[j + 1][  k  ] * (LPF[2][1] / 9)
+				+ image_in[j + 1][k + 1] * (LPF[2][2]) / 9);
+	}

@@ -1,0 +1,53 @@
+
+/*	Prewitt's edge detection algorithm. Convolute the image with the 
+	mask below. Take the absolute value of the result for both of the
+	convolution. If the sum is greater than the threshold value, the 
+	pixel is white else black.
+*/
+
+/*	gx and gy are both masks for the edge detection
+*/
+int gx[3][3] = { {-1,-1,-1},{ 0,0,0},{ 1,1,1} };
+int gy[3][3] = { {-1, 0, 1},{-1,0,1},{-1,0,1} };
+
+/*	a and b are the result of the convolution
+*/
+
+int a;
+int b;
+
+// t is the threshold value. User input should allow it to be changed
+
+int t = 120;
+
+for (j = 1; j< height - 1; j++)
+	for (k = 1; k < width - 1; k++)
+	{
+		a = image_in[j - 1][k - 1] * gx[0][0]
+			+ image_in[j + 0][k - 1] * gx[1][0]
+			+ image_in[j + 1][k - 1] * gx[2][0]
+			+ image_in[j - 1][k + 0] * gx[0][1]
+			+ image_in[j + 0][k + 0] * gx[1][1]
+			+ image_in[j + 1][k + 0] * gx[2][1]
+			+ image_in[j - 1][k + 1] * gx[0][2]
+			+ image_in[j + 0][k + 1] * gx[1][2]
+			+ image_in[j + 1][k + 1] * gx[2][2];
+
+		b = image_in[j - 1][k - 1] * gy[0][0]
+			+ image_in[j + 0][k - 1] * gy[1][0]
+			+ image_in[j + 1][k - 1] * gy[2][0]
+			+ image_in[j - 1][k + 0] * gy[0][1]
+			+ image_in[j + 0][k + 0] * gy[1][1]
+			+ image_in[j + 1][k + 0] * gy[2][1]
+			+ image_in[j - 1][k + 1] * gy[0][2]
+			+ image_in[j + 0][k + 1] * gy[1][2]
+			+ image_in[j + 1][k + 1] * gy[2][2];
+
+		if ((abs(a) + abs(b)) > t) {
+			image_out[j][k] = 255;
+		}
+		else
+		{
+			image_out[j][k] = 0;
+		}
+	}

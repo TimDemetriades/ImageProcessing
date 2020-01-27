@@ -1,0 +1,14 @@
+int lap[3][3] = { {0,-1,0}, {-1,5,-1}, {0,-1,0} };
+for (j =1; j< height-1; j++)
+	for (k = 1; k< width -1; k++)
+	{
+	image_out[j][k]= (image_in[j - 1][k - 1] * lap[0][0]
+					+ image_in[j + 0][k - 1] * lap[1][0]
+					+ image_in[j + 1][k - 1] * lap[2][0]
+					+ image_in[j - 1][k + 0] * lap[0][1]
+					+ image_in[j + 0][k + 0] * lap[1][1]
+					+ image_in[j + 1][k + 0] * lap[2][1]
+					+ image_in[j - 1][k + 1] * lap[0][2]
+					+ image_in[j + 0][k + 1] * lap[1][2]
+					+ image_in[j + 1][k + 1] * lap[2][2]);
+	}

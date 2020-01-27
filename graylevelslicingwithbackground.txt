@@ -1,0 +1,19 @@
+int a = 70;
+int b = 130; 
+int gl = 150;
+
+for (j = 0; j < height; j++)
+	for (k = 0; k < width; k++)
+	{
+		if (image_in[j][k] < a) {
+			image_out[j][k] = image_in[j][k];
+		}
+		else if (image_in[j][k] > b) {
+			image_out[j][k] = image_in[j][k];
+		}
+		else
+		{
+			image_out[j][k] = gl;
+		}
+	}
+

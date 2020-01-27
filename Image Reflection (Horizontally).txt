@@ -1,0 +1,8 @@
+//Image Reflection (Horizontally)
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			image_out[j][k] = image_in[j][width-1-k]; // Mirror pixel
+		}
+        

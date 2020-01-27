@@ -1,0 +1,23 @@
+	int r1 = 96;
+	int r2 = 160;
+	int s1 = 50;
+	int s2 = 200;
+	float alpha = s1/r1;
+	float beta = (s2 - s1) / (r2 - r1);
+	float gamma = (255 -s2)/(255-r2); 
+
+	for (j = 0; j < height; j++)
+		for (k = 0; k < width; k++)
+		{
+			if (image_in[j][k] < r1) {
+				image_out[j][k] = round(alpha*image_in[j][k]);
+			}
+			else if (image_in[j][k] > r2) {
+				image_out[j][k] = round(gamma*(image_in[j][k] - r2) + s2);
+			}
+			else
+			{
+				image_out[j][k] = round(beta*(image_in[j][k] - r1) + s1);
+			}
+		}
+
